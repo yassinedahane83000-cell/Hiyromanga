@@ -1798,5 +1798,24 @@ function showToast(msg, type = 'info') {
   setTimeout(() => el.remove(), 3500);
 }
 </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof show_11407087 === 'function') {
+        show_11407087({
+            type: 'inApp',
+            inAppSettings: {
+                frequency: 2,
+                capping: 0.1,
+                interval: 30,
+                timeout: 5,
+                everyPage: false
+            }
+        });
+    }
+});
+</script>
+  
 </body>
 </html>
