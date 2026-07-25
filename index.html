@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hiyro Manga - قراءة مانجا ومنهوا</title>
+<meta name="description" content="Hiyro Manga - اقرأ أحدث فصول المانجا والمنهوا والويب تون بالعربية"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;
+  --bg2:#111118;
+  --bg3:#18181f;
+  --bg4:#1e1e28;
+  --accent:#7c3aed;
+  --accent2:#a855f7;
+  --accent3:#c084fc;
+  --cyan:#06b6d4;
+  --red:#ef4444;
+  --green:#22c55e;
+  --yellow:#eab308;
+  --text:#f1f5f9;
+  --text2:#94a3b8;
+  --text3:#64748b;
+  --border:#2a2a38;
+  --border2:#3a3a50;
+  --card:#14141c;
+  --card2:#1a1a24;
+  --shadow:0 4px 24px rgba(0,0,0,.6);
+  --radius:10px;
+  --radius2:16px;
+  --font:'Cairo',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:var(--font);border:none;outline:none}
+input,select,textarea{font-family:var(--font)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+
+/* ---- NAVBAR ---- */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(10,10,15,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  height:60px;display:flex;align-items:center;
+}
+.nav-inner{
+  max-width:1400px;margin:0 auto;padding:0 16px;
+  width:100%;display:flex;align-items:center;gap:16px;
+}
+.nav-logo{
+  font-size:1.4rem;font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  white-space:nowrap;flex-shrink:0;
+}
+.nav-logo span{color:var(--cyan);-webkit-text-fill-color:var(--cyan)}
+.nav-search{
+  flex:1;max-width:500px;position:relative;
+}
+.nav-search input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:9px 16px 9px 44px;border-radius:50px;
+  font-size:.9rem;transition:.2s;
+}
+.nav-search input:focus{border-color:var(--accent);outline:none}
+.nav-search .search-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--text3);pointer-events:none;font-size:1rem;
+}
+#search-results-dropdown{
+  position:absolute;top:calc(100% + 8px);right:0;left:0;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);z-index:2000;display:none;max-height:400px;overflow-y:auto;
+}
+.search-result-item{
+  display:flex;gap:12px;padding:10px 14px;align-items:center;
+  transition:.15s;cursor:pointer;
+}
+.search-result-item:hover{background:var(--bg3)}
+.search-result-item img{width:40px;height:56px;object-fit:cover;border-radius:4px;flex-shrink:0}
+.search-result-info{flex:1;min-width:0}
+.search-result-info h4{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result-info p{font-size:.75rem;color:var(--text2)}
+.nav-links{display:flex;gap:4px;align-items:center;margin-right:auto}
+.nav-link{
+  padding:7px 12px;border-radius:var(--radius);font-size:.85rem;
+  color:var(--text2);transition:.2s;white-space:nowrap;
+}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--bg3)}
+.nav-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn-icon{
+  width:38px;height:38px;border-radius:50%;background:var(--bg3);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  color:var(--text2);font-size:1rem;transition:.2s;position:relative;
+}
+.btn-icon:hover{color:var(--text);border-color:var(--accent)}
+.notif-badge{
+  position:absolute;top:-2px;right:-2px;
+  background:var(--red);color:#fff;font-size:.6rem;
+  width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:700;display:none;
+}
+.btn-primary{
+  padding:8px 18px;background:var(--accent);color:#fff;
+  border-radius:50px;font-size:.85rem;font-weight:600;transition:.2s;
+}
+.btn-primary:hover{background:var(--accent2)}
+.avatar-btn{
+  width:36px;height:36px;border-radius:50%;overflow:hidden;
+  border:2px solid var(--accent);flex-shrink:0;cursor:pointer;
+  background:var(--bg3);display:flex;align-items:center;justify-content:center;
+  color:var(--accent);font-size:1rem;
+}
+.avatar-btn img{width:100%;height:100%;object-fit:cover}
+#hamburger{
+  display:none;background:none;border:none;
+  color:var(--text);font-size:1.3rem;padding:4px;
+}
+
+/* DROPDOWN USER MENU */
+.user-menu-wrap{position:relative}
+.user-dropdown{
+  position:absolute;top:calc(100% + 10px);left:0;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius2);min-width:200px;
+  box-shadow:var(--shadow);overflow:hidden;z-index:2000;display:none;
+}
+.user-dropdown.open{display:block}
+.user-dropdown-header{padding:14px 16px;border-bottom:1px solid var(--border)}
+.user-dropdown-header .uname{font-weight:700;font-size:.9rem}
+.user-dropdown-header .uemail{font-size:.75rem;color:var(--text2);margin-top:2px}
+.user-dropdown a{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;
+  font-size:.85rem;color:var(--text2);transition:.15s;
+}
+.user-dropdown a:hover{background:var(--bg3);color:var(--text)}
+.user-dropdown .sep{height:1px;background:var(--border);margin:4px 0}
+
+/* MOBILE NAV */
+#mobile-nav{
+  position:fixed;top:60px;right:0;left:0;bottom:0;
+  background:var(--bg2);z-index:999;padding:20px;
+  overflow-y:auto;transform:translateX(-100%);transition:.3s;display:none;
+}
+#mobile-nav.open{transform:translateX(0)}
+.mobile-nav-link{
+  display:flex;align-items:center;gap:12px;padding:14px 0;
+  font-size:1rem;color:var(--text2);border-bottom:1px solid var(--border);
+}
+.mobile-nav-link:hover{color:var(--text)}
+.mobile-search{margin-bottom:20px;position:relative}
+.mobile-search input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:12px 16px;border-radius:var(--radius);font-size:.95rem;
+}
+
+/* MAIN LAYOUT */
+main{padding-top:60px;min-height:100vh}
+.page{display:none}
+.page.active{display:block}
+
+/* ---- HOME PAGE ---- */
+/* SLIDER */
+#slider-section{position:relative;overflow:hidden;height:420px}
+@media(max-width:640px){#slider-section{height:280px}}
+.slider-track{display:flex;transition:transform .5s ease;height:100%}
+.slide{
+  min-width:100%;height:100%;position:relative;flex-shrink:0;
+}
+.slide img{width:100%;height:100%;object-fit:cover}
+.slide-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(10,10,15,1) 0%, rgba(10,10,15,.7) 40%, rgba(10,10,15,.1) 100%);
+}
+.slide-content{
+  position:absolute;bottom:40px;right:40px;left:40px;
+  max-width:600px;
+}
+@media(max-width:640px){.slide-content{bottom:20px;right:20px;left:20px}}
+.slide-badge{
+  display:inline-block;background:var(--accent);color:#fff;
+  padding:3px 10px;border-radius:50px;font-size:.75rem;font-weight:700;
+  margin-bottom:10px;
+}
+.slide-content h2{font-size:1.8rem;font-weight:900;margin-bottom:8px;line-height:1.2}
+@media(max-width:640px){.slide-content h2{font-size:1.3rem}}
+.slide-content p{color:var(--text2);font-size:.9rem;margin-bottom:16px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.slide-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-outline{
+  padding:8px 18px;border:1px solid var(--border2);color:var(--text);
+  border-radius:50px;font-size:.85rem;font-weight:600;transition:.2s;background:transparent;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.slider-dots{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:6px;
+}
+.slider-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--text3);
+  cursor:pointer;transition:.2s;
+}
+.slider-dot.active{background:var(--accent);width:20px;border-radius:4px}
+.slider-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.6);border:1px solid var(--border);color:var(--text);
+  width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;transition:.2s;z-index:10;cursor:pointer;
+}
+.slider-btn:hover{background:var(--accent)}
+.slider-btn.prev{right:16px}
+.slider-btn.next{left:16px}
+
+/* SECTIONS */
+.section{padding:40px 0}
+.section-inner{max-width:1400px;margin:0 auto;padding:0 16px}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.section-title{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:10px}
+.section-title::before{
+  content:'';width:4px;height:22px;background:var(--accent);
+  border-radius:2px;display:block;
+}
+.see-all{font-size:.82rem;color:var(--accent);font-weight:600;transition:.2s}
+.see-all:hover{color:var(--accent3)}
+
+/* WORK CARDS GRID */
+.works-grid{
+  display:grid;gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+}
+@media(max-width:480px){.works-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+.work-card{
+  background:var(--card);border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--border);transition:.25s;cursor:pointer;
+}
+.work-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 32px rgba(124,58,237,.3)}
+.work-card-cover{position:relative;aspect-ratio:2/3;overflow:hidden}
+.work-card-cover img{width:100%;height:100%;object-fit:cover;transition:.3s}
+.work-card:hover .work-card-cover img{transform:scale(1.06)}
+.work-card-badge{
+  position:absolute;top:8px;right:8px;
+  background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;
+  padding:2px 8px;border-radius:50px;
+}
+.work-card-badge.new{background:var(--green)}
+.work-card-badge.hot{background:var(--red)}
+.work-card-body{padding:10px}
+.work-card-title{
+  font-size:.85rem;font-weight:700;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:4px;line-height:1.4;
+}
+.work-card-meta{font-size:.72rem;color:var(--text2)}
+.work-card-latest{
+  font-size:.72rem;color:var(--accent3);margin-top:6px;font-weight:600;
+}
+
+/* CHAPTERS LIST */
+.chapters-list-home{display:flex;flex-direction:column;gap:10px}
+.chapter-home-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);display:flex;gap:12px;align-items:center;
+  padding:10px 14px;transition:.2s;cursor:pointer;
+}
+.chapter-home-item:hover{border-color:var(--accent);background:var(--card2)}
+.chapter-home-cover{width:44px;height:60px;border-radius:6px;object-fit:cover;flex-shrink:0}
+.chapter-home-info{flex:1;min-width:0}
+.chapter-home-title{font-size:.85rem;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chapter-home-chapter{font-size:.78rem;color:var(--accent3);margin-top:2px}
+.chapter-home-time{font-size:.72rem;color:var(--text3);margin-top:4px}
+
+/* CATEGORIES */
+.cats-grid{display:flex;flex-wrap:wrap;gap:8px}
+.cat-pill{
+  padding:7px 16px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:50px;font-size:.82rem;cursor:pointer;transition:.2s;
+}
+.cat-pill:hover,.cat-pill.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ---- SEARCH PAGE ---- */
+.search-page{padding:24px 16px;max-width:1400px;margin:0 auto}
+.search-filters{
+  display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius2);padding:20px;
+}
+.filter-group{display:flex;flex-direction:column;gap:6px;min-width:160px}
+.filter-group label{font-size:.78rem;color:var(--text2);font-weight:600}
+.filter-group select,.filter-group input{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:var(--radius);
+  font-size:.85rem;
+}
+.filter-group select:focus,.filter-group input:focus{border-color:var(--accent);outline:none}
+.search-input-big{
+  flex:1;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:10px 16px;border-radius:var(--radius);
+  font-size:.95rem;min-width:200px;
+}
+.search-input-big:focus{border-color:var(--accent);outline:none}
+.btn-search{
+  padding:10px 24px;background:var(--accent);color:#fff;
+  border-radius:var(--radius);font-size:.9rem;font-weight:700;transition:.2s;
+}
+.btn-search:hover{background:var(--accent2)}
+#search-results-count{font-size:.85rem;color:var(--text2);margin-bottom:16px}
+
+/* ---- WORK DETAIL PAGE ---- */
+.work-detail{max-width:1100px;margin:0 auto;padding:24px 16px}
+.work-hero{
+  display:flex;gap:32px;margin-bottom:36px;
+}
+@media(max-width:640px){.work-hero{flex-direction:column;gap:20px}}
+.work-cover{
+  width:220px;flex-shrink:0;border-radius:var(--radius2);overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.8);
+}
+@media(max-width:640px){.work-cover{width:160px}}
+.work-cover img{width:100%;aspect-ratio:2/3;object-fit:cover}
+.work-info{flex:1}
+.work-type-badge{
+  display:inline-block;padding:3px 12px;border-radius:50px;
+  font-size:.72rem;font-weight:700;margin-bottom:12px;
+  background:var(--accent);color:#fff;
+}
+.work-title{font-size:2rem;font-weight:900;margin-bottom:8px;line-height:1.2}
+@media(max-width:640px){.work-title{font-size:1.4rem}}
+.work-author{font-size:.9rem;color:var(--text2);margin-bottom:16px}
+.work-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.work-stat{display:flex;flex-direction:column;gap:2px}
+.work-stat .val{font-size:1.1rem;font-weight:700}
+.work-stat .lbl{font-size:.72rem;color:var(--text2)}
+.work-status{
+  display:inline-block;padding:4px 14px;border-radius:50px;
+  font-size:.78rem;font-weight:700;margin-bottom:16px;
+}
+.work-status.ongoing{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.work-status.completed{background:rgba(6,182,212,.15);color:var(--cyan);border:1px solid rgba(6,182,212,.3)}
+.work-status.hiatus{background:rgba(234,179,8,.15);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}
+.work-status.dropped{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+.work-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.btn-follow,.btn-fav{
+  display:flex;align-items:center;gap:8px;padding:10px 20px;
+  border-radius:50px;font-size:.85rem;font-weight:700;transition:.2s;
+}
+.btn-follow{background:var(--accent);color:#fff}
+.btn-follow:hover{background:var(--accent2)}
+.btn-follow.following{background:var(--bg3);color:var(--accent);border:1px solid var(--accent)}
+.btn-fav{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+.btn-fav:hover,.btn-fav.active{border-color:var(--yellow);color:var(--yellow)}
+.work-cats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.work-cat-tag{
+  padding:4px 12px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:50px;font-size:.75rem;cursor:pointer;transition:.2s;
+}
+.work-cat-tag:hover{border-color:var(--accent);color:var(--accent)}
+.work-desc{
+  color:var(--text2);font-size:.9rem;line-height:1.8;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
+}
+.chapters-section{margin-top:32px}
+.chapters-section h3{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.chapters-section h3::before{content:'';width:4px;height:18px;background:var(--accent);border-radius:2px;display:block}
+.chapter-list{display:flex;flex-direction:column;gap:8px;max-height:500px;overflow-y:auto}
+.chapter-item{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);cursor:pointer;transition:.2s;
+}
+.chapter-item:hover{border-color:var(--accent);background:var(--card2)}
+.chapter-item.read{opacity:.6}
+.chapter-item-info{flex:1;min-width:0}
+.chapter-num{font-size:.9rem;font-weight:700}
+.chapter-name{font-size:.78rem;color:var(--text2);margin-top:2px}
+.chapter-date{font-size:.72rem;color:var(--text3);flex-shrink:0}
+.chapter-has-link{
+  width:8px;height:8px;border-radius:50%;background:var(--accent3);
+  flex-shrink:0;
+}
+
+/* ---- CHAPTER READER PAGE ---- */
+#reader-page{background:var(--bg);min-height:100vh;padding-top:0}
+.reader-header{
+  position:sticky;top:60px;z-index:100;
+  background:rgba(10,10,15,.95);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.reader-work-title{font-size:.85rem;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.reader-chapter-num{font-size:.9rem;font-weight:700;white-space:nowrap}
+.reader-nav-btns{display:flex;gap:8px;flex-shrink:0}
+.reader-nav-btn{
+  padding:6px 14px;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);border-radius:var(--radius);font-size:.8rem;font-weight:600;
+  transition:.2s;
+}
+.reader-nav-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.reader-nav-btn:disabled{opacity:.4;cursor:not-allowed}
+.reader-mode-btn{
+  padding:6px 14px;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text2);border-radius:var(--radius);font-size:.8rem;transition:.2s;
+}
+.reader-mode-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* DIRECT LINK GATE */
+#direct-link-gate{
+  min-height:50vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:20px;padding:40px 16px;text-align:center;
+}
+.gate-icon{font-size:3rem;margin-bottom:8px}
+.gate-title{font-size:1.3rem;font-weight:700}
+.gate-desc{color:var(--text2);max-width:400px;line-height:1.7}
+.btn-continue{
+  padding:14px 40px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border-radius:50px;font-size:1rem;font-weight:700;
+  transition:.2s;box-shadow:0 4px 24px rgba(124,58,237,.4);
+}
+.btn-continue:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,.6)}
+
+/* READER CONTENT */
+.reader-content{max-width:900px;margin:0 auto;padding:16px}
+#reader-vertical .reader-img-wrap{margin-bottom:4px;line-height:0}
+#reader-vertical .reader-img-wrap img{width:100%;display:block}
+#reader-horizontal{
+  display:flex;overflow-x:auto;gap:8px;scroll-snap-type:x mandatory;
+  min-height:60vh;
+}
+#reader-horizontal .reader-img-wrap{
+  flex-shrink:0;scroll-snap-align:center;
+  height:85vh;
+}
+#reader-horizontal .reader-img-wrap img{height:100%;object-fit:contain}
+.reader-bottom-nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 0;margin-top:8px;
+}
+.lazy-img{opacity:0;transition:opacity .4s}
+.lazy-img.loaded{opacity:1}
+
+/* ---- AUTH MODAL ---- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:3000;
+  display:flex;align-items:center;justify-content:center;padding:16px;
+}
+.modal-overlay.hidden{display:none}
+.modal{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius2);width:100%;max-width:420px;
+  overflow:hidden;
+}
+.modal-header{padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:1.1rem;font-weight:700}
+.modal-close{background:none;border:none;color:var(--text2);font-size:1.3rem;cursor:pointer;transition:.2s}
+.modal-close:hover{color:var(--red)}
+.modal-tabs{display:flex;border-bottom:1px solid var(--border);margin:16px 24px 0}
+.modal-tab{
+  padding:10px 20px;font-size:.9rem;font-weight:600;cursor:pointer;
+  color:var(--text2);border-bottom:2px solid transparent;transition:.2s;
+}
+.modal-tab.active{color:var(--accent);border-color:var(--accent)}
+.modal-body{padding:24px}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.form-group label{font-size:.8rem;color:var(--text2);font-weight:600}
+.form-control{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:10px 14px;border-radius:var(--radius);
+  font-size:.9rem;transition:.2s;width:100%;
+}
+.form-control:focus{border-color:var(--accent);outline:none}
+.btn-block{
+  width:100%;padding:11px;background:var(--accent);color:#fff;
+  border-radius:var(--radius);font-size:.95rem;font-weight:700;
+  transition:.2s;margin-top:4px;
+}
+.btn-block:hover{background:var(--accent2)}
+.form-error{color:var(--red);font-size:.8rem;display:none;margin-top:4px}
+.form-error.show{display:block}
+
+/* ---- PROFILE PAGE ---- */
+.profile-page{max-width:900px;margin:0 auto;padding:24px 16px}
+.profile-header{
+  display:flex;align-items:center;gap:24px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius2);padding:24px;margin-bottom:28px;
+}
+.profile-avatar{
+  width:80px;height:80px;border-radius:50%;
+  border:3px solid var(--accent);overflow:hidden;flex-shrink:0;
+  background:var(--bg3);display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:var(--accent);
+}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.profile-name{font-size:1.3rem;font-weight:700}
+.profile-role{font-size:.78rem;color:var(--accent3);margin-top:2px}
+.profile-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:24px;overflow-x:auto}
+.profile-tab{
+  padding:10px 20px;font-size:.85rem;font-weight:600;
+  color:var(--text2);border-bottom:2px solid transparent;
+  cursor:pointer;transition:.2s;white-space:nowrap;
+}
+.profile-tab.active{color:var(--accent);border-color:var(--accent)}
+.profile-tab-content{display:none}
+.profile-tab-content.active{display:block}
+
+/* FAVORITES / HISTORY grid */
+.my-works-grid{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+}
+
+/* NOTIFICATIONS PANEL */
+.notif-panel{
+  position:fixed;top:60px;left:0;width:340px;max-height:80vh;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);
+  box-shadow:var(--shadow);z-index:2000;overflow:hidden;display:none;
+}
+.notif-panel.open{display:flex;flex-direction:column}
+.notif-panel-header{
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  font-weight:700;font-size:.9rem;flex-shrink:0;
+}
+.notif-list{overflow-y:auto;flex:1}
+.notif-item{
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:.15s;
+}
+.notif-item:hover{background:var(--bg3)}
+.notif-item.unread{background:rgba(124,58,237,.07)}
+.notif-item-title{font-size:.85rem;font-weight:600}
+.notif-item-body{font-size:.78rem;color:var(--text2);margin-top:3px}
+.notif-item-time{font-size:.7rem;color:var(--text3);margin-top:4px}
+.notif-empty{padding:40px;text-align:center;color:var(--text2)}
+
+/* STATIC PAGES */
+.static-page{max-width:800px;margin:0 auto;padding:40px 16px}
+.static-page h1{font-size:1.8rem;font-weight:900;margin-bottom:8px}
+.static-page .update-date{color:var(--text2);font-size:.85rem;margin-bottom:32px}
+.static-page h2{font-size:1.1rem;font-weight:700;margin:28px 0 10px;color:var(--accent3)}
+.static-page p{color:var(--text2);line-height:1.9;margin-bottom:14px;font-size:.9rem}
+.static-page a{color:var(--accent3);text-decoration:underline}
+
+/* FOOTER */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:40px 16px 20px;margin-top:60px;
+}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:32px}
+.footer-brand .logo{font-size:1.4rem;font-weight:900;margin-bottom:10px}
+.footer-brand p{font-size:.85rem;color:var(--text2);line-height:1.7}
+.footer-col h4{font-size:.9rem;font-weight:700;margin-bottom:14px;color:var(--text)}
+.footer-col a{display:block;font-size:.83rem;color:var(--text2);padding:4px 0;transition:.2s}
+.footer-col a:hover{color:var(--accent3)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:.8rem;color:var(--text3)}
+
+/* TOAST */
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{
+  padding:12px 20px;border-radius:var(--radius);font-size:.85rem;font-weight:600;
+  box-shadow:var(--shadow);animation:slideInToast .3s ease;
+  max-width:320px;
+}
+.toast.success{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:var(--green)}
+.toast.error{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:var(--red)}
+.toast.info{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.4);color:var(--accent3)}
+@keyframes slideInToast{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* EMPTY STATES */
+.empty-state{padding:60px 20px;text-align:center;color:var(--text2)}
+.empty-state .icon{font-size:3rem;margin-bottom:12px;opacity:.5}
+.empty-state p{font-size:.9rem}
+
+/* LOADING */
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-card{height:260px;border-radius:var(--radius);overflow:hidden}
+.loader{
+  display:inline-block;width:20px;height:20px;border:2px solid var(--border);
+  border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.page-loader{padding:80px;display:flex;justify-content:center;align-items:center}
+
+/* RESPONSIVE TWEAKS */
+@media(max-width:768px){
+  .nav-links{display:none}
+  #hamburger{display:block}
+  #mobile-nav{display:block}
+  .works-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
+@media(max-width:480px){
+  .section{padding:24px 0}
+  .work-hero{gap:14px}
+  .work-cover{width:130px}
+  .work-title{font-size:1.2rem}
+  .profile-header{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" data-nav="home" style="cursor:pointer">Hiyro <span>Manga</span></div>
+    <div class="nav-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="nav-search-input" placeholder="ابحث عن مانجا، منهوا، ويب تون..." autocomplete="off"/>
+      <div id="search-results-dropdown"></div>
+    </div>
+    <nav class="nav-links">
+      <a class="nav-link active" data-nav="home">الرئيسية</a>
+      <a class="nav-link" data-nav="search">استكشاف</a>
+      <a class="nav-link" data-nav="static-privacy">سياسة</a>
+      <a class="nav-link" data-nav="static-terms">الشروط</a>
+      <a class="nav-link" data-nav="static-contact">تواصل</a>
+    </nav>
+    <div class="nav-actions">
+      <div id="notif-btn-wrap" style="display:none">
+        <button class="btn-icon" id="notif-btn" title="الإشعارات">
+          🔔<span class="notif-badge" id="notif-badge">0</span>
+        </button>
+      </div>
+      <div id="auth-area">
+        <button class="btn-primary" id="open-auth-btn">تسجيل الدخول</button>
+      </div>
+      <button class="btn-icon" id="hamburger">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mobile-nav">
+  <div class="mobile-search">
+    <input type="text" id="mobile-search-input" placeholder="ابحث..."/>
+  </div>
+  <a class="mobile-nav-link" data-nav="home">🏠 الرئيسية</a>
+  <a class="mobile-nav-link" data-nav="search">🔍 استكشاف</a>
+  <a class="mobile-nav-link" data-nav="static-privacy">🔒 سياسة الخصوصية</a>
+  <a class="mobile-nav-link" data-nav="static-terms">📄 شروط الاستخدام</a>
+  <a class="mobile-nav-link" data-nav="static-disclaimer">⚠️ إخلاء المسؤولية</a>
+  <a class="mobile-nav-link" data-nav="static-contact">📧 تواصل معنا</a>
+</div>
+
+<!-- NOTIFICATIONS PANEL -->
+<div id="notif-panel" class="notif-panel">
+  <div class="notif-panel-header">
+    <span>الإشعارات</span>
+    <button id="mark-all-read" style="font-size:.78rem;color:var(--accent);background:none;border:none;cursor:pointer">تعليم الكل كمقروء</button>
+  </div>
+  <div class="notif-list" id="notif-list"></div>
+</div>
+
+<!-- ===================== MAIN ===================== -->
+<main>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <!-- SLIDER -->
+  <div id="slider-section">
+    <div class="slider-track" id="slider-track"></div>
+    <button class="slider-btn prev" id="slider-prev">›</button>
+    <button class="slider-btn next" id="slider-next">‹</button>
+    <div class="slider-dots" id="slider-dots"></div>
+  </div>
+
+  <!-- LATEST CHAPTERS -->
+  <div class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">أحدث الفصول</h2>
+        <a class="see-all" data-nav="search">عرض الكل</a>
+      </div>
+      <div id="latest-chapters-list" class="chapters-list-home"></div>
+    </div>
+  </div>
+
+  <!-- LATEST WORKS -->
+  <div class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">أحدث الإضافات</h2>
+        <a class="see-all" data-nav="search">عرض الكل</a>
+      </div>
+      <div id="latest-works-grid" class="works-grid"></div>
+    </div>
+  </div>
+
+  <!-- MOST VIEWED -->
+  <div class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">الأكثر مشاهدة</h2>
+      </div>
+      <div id="most-viewed-grid" class="works-grid"></div>
+    </div>
+  </div>
+
+  <!-- MOST FOLLOWED -->
+  <div class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">الأكثر متابعة</h2>
+      </div>
+      <div id="most-followed-grid" class="works-grid"></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2 class="section-title">التصنيفات</h2>
+      </div>
+      <div id="cats-grid" class="cats-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH PAGE -->
+<div class="page" id="page-search">
+  <div class="search-page">
+    <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:24px">استكشاف الأعمال</h1>
+    <div class="search-filters">
+      <input type="text" id="sf-query" class="search-input-big" placeholder="البحث بالاسم أو المؤلف..."/>
+      <div class="filter-group">
+        <label>النوع</label>
+        <select id="sf-type">
+          <option value="">الكل</option>
+          <option value="manga">مانجا</option>
+          <option value="manhwa">منهوا</option>
+          <option value="webtoon">ويب تون</option>
+          <option value="novel">نوفل</option>
+          <option value="manhua">مانهوا</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>الحالة</label>
+        <select id="sf-status">
+          <option value="">الكل</option>
+          <option value="ongoing">مستمر</option>
+          <option value="completed">مكتمل</option>
+          <option value="hiatus">متوقف</option>
+          <option value="dropped">ملغى</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>الترتيب</label>
+        <select id="sf-sort">
+          <option value="latest">الأحدث</option>
+          <option value="views">الأكثر مشاهدة</option>
+          <option value="followers">الأكثر متابعة</option>
+          <option value="az">أبجدي</option>
+        </select>
+      </div>
+      <button class="btn-search" id="sf-btn">بحث</button>
+    </div>
+    <div id="search-results-count"></div>
+    <div id="search-results-grid" class="works-grid"></div>
+    <div id="search-load-more" style="text-align:center;margin-top:24px;display:none">
+      <button class="btn-outline" id="load-more-btn">تحميل المزيد</button>
+    </div>
+  </div>
+</div>
+
+<!-- WORK DETAIL PAGE -->
+<div class="page" id="page-work">
+  <div class="work-detail" id="work-detail-inner"></div>
+</div>
+
+<!-- READER PAGE -->
+<div class="page" id="page-reader">
+  <div class="reader-header">
+    <span class="reader-work-title" id="reader-work-title">-</span>
+    <span class="reader-chapter-num" id="reader-chapter-num">الفصل -</span>
+    <div class="reader-nav-btns">
+      <button class="reader-nav-btn" id="reader-prev">‹ السابق</button>
+      <button class="reader-nav-btn" id="reader-next">التالي ›</button>
+    </div>
+    <button class="reader-mode-btn active" id="reader-mode-v">عمودي</button>
+    <button class="reader-mode-btn" id="reader-mode-h">أفقي</button>
+    <a class="reader-mode-btn" data-nav-back style="display:inline-block">✕</a>
+  </div>
+  <div id="direct-link-gate" style="display:none">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">هذا الفصل يتطلب خطوة واحدة</div>
+    <div class="gate-desc">للوصول إلى الفصل الكامل، اضغط على الزر أدناه وانتظر لحظة.</div>
+    <button class="btn-continue" id="btn-continue-chapter">Continue To Chapter</button>
+  </div>
+  <div id="reader-body" style="display:none">
+    <div class="reader-content">
+      <div id="reader-vertical">
+        <div id="reader-images-v"></div>
+      </div>
+      <div id="reader-horizontal" style="display:none">
+        <div id="reader-images-h" style="display:flex;gap:8px;align-items:center;padding:16px 0"></div>
+      </div>
+      <div class="reader-bottom-nav">
+        <button class="reader-nav-btn" id="reader-prev-bottom">‹ الفصل السابق</button>
+        <a data-nav-back class="btn-outline" style="cursor:pointer">العودة للعمل</a>
+        <button class="reader-nav-btn" id="reader-next-bottom">الفصل التالي ›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div class="page" id="page-profile">
+  <div class="profile-page">
+    <div class="profile-header" id="profile-header-inner"></div>
+    <div class="profile-tabs">
+      <div class="profile-tab active" data-ptab="favorites">المفضلة</div>
+      <div class="profile-tab" data-ptab="history">سجل القراءة</div>
+      <div class="profile-tab" data-ptab="settings">الإعدادات</div>
+    </div>
+    <div class="profile-tab-content active" id="ptab-favorites">
+      <div id="profile-favorites-grid" class="my-works-grid"></div>
+    </div>
+    <div class="profile-tab-content" id="ptab-history">
+      <div id="profile-history-list" class="chapters-list-home"></div>
+    </div>
+    <div class="profile-tab-content" id="ptab-settings">
+      <div style="max-width:400px">
+        <div class="form-group">
+          <label>الاسم المعروض</label>
+          <input type="text" id="settings-display-name" class="form-control" placeholder="اسمك"/>
+        </div>
+        <div class="form-group">
+          <label>رابط الصورة الشخصية</label>
+          <input type="text" id="settings-avatar" class="form-control" placeholder="https://..."/>
+        </div>
+        <div class="form-group">
+          <label>نبذة عنك</label>
+          <textarea id="settings-bio" class="form-control" rows="3" placeholder="اكتب نبذة..."></textarea>
+        </div>
+        <button class="btn-primary" id="save-settings-btn">حفظ التغييرات</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATIC PAGES -->
+<div class="page" id="page-static-privacy">
+  <div class="static-page">
+    <h1>سياسة الخصوصية</h1>
+    <p class="update-date">آخر تحديث: يناير 2025</p>
+    <h2>جمع المعلومات</h2>
+    <p>نقوم بجمع المعلومات التي تقدمها مباشرةً عند إنشاء حساب، مثل اسم المستخدم وعنوان البريد الإلكتروني وكلمة المرور. نحن لا نبيع هذه المعلومات لأي طرف ثالث.</p>
+    <h2>استخدام المعلومات</h2>
+    <p>نستخدم المعلومات التي نجمعها لتشغيل الموقع وتحسينه، وتقديم الميزات المطلوبة مثل حفظ سجل القراءة والمفضلة، وإرسال إشعارات الفصول الجديدة.</p>
+    <h2>ملفات الكوكيز</h2>
+    <p>يستخدم الموقع ملفات الكوكيز لحفظ جلسة المستخدم والتفضيلات. يمكنك تعطيلها من إعدادات المتصفح، لكن ذلك قد يؤثر على بعض وظائف الموقع.</p>
+    <h2>الإعلانات</h2>
+    <p>قد يعرض الموقع إعلانات من شركاء خارجيين. قد تستخدم هذه الشركات ملفات الكوكيز لتقديم إعلانات مخصصة بناءً على اهتماماتك.</p>
+    <h2>تواصل معنا</h2>
+    <p>لأي استفسارات تتعلق بسياسة الخصوصية، تواصل معنا على: <a href="mailto:OKIROMANGA@GMAIL.COM">OKIROMANGA@GMAIL.COM</a></p>
+  </div>
+</div>
+<div class="page" id="page-static-terms">
+  <div class="static-page">
+    <h1>شروط الاستخدام</h1>
+    <p class="update-date">آخر تحديث: يناير 2025</p>
+    <h2>القبول بالشروط</h2>
+    <p>باستخدامك لموقع Hiyro Manga، فأنت توافق على الالتزام بهذه الشروط والأحكام. إذا كنت لا توافق على هذه الشروط، يرجى عدم استخدام الموقع.</p>
+    <h2>الحساب الشخصي</h2>
+    <p>أنت مسؤول عن الحفاظ على سرية بيانات حسابك. يجب أن تكون مسؤولاً عن جميع الأنشطة التي تحدث تحت حسابك.</p>
+    <h2>المحتوى</h2>
+    <p>جميع المحتويات المعروضة على الموقع هي ملك لأصحابها الأصليين. نحن نعرض هذه المحتويات لأغراض التعليم والترفيه فقط.</p>
+    <h2>السلوك المحظور</h2>
+    <p>يُحظر استخدام الموقع لنشر محتوى غير لائق أو مسيء، أو انتهاك حقوق الملكية الفكرية، أو محاولة اختراق أنظمة الموقع.</p>
+    <h2>إخلاء المسؤولية</h2>
+    <p>نحتفظ بالحق في تعديل أو إيقاف الخدمة في أي وقت دون إشعار مسبق.</p>
+  </div>
+</div>
+<div class="page" id="page-static-disclaimer">
+  <div class="static-page">
+    <h1>إخلاء المسؤولية</h1>
+    <p class="update-date">آخر تحديث: يناير 2025</p>
+    <h2>حقوق الملكية</h2>
+    <p>جميع المانجا والمنهوا والمحتويات المعروضة على هذا الموقع هي ملك لمؤلفيها وشركات النشر الأصلية. نحن لا ندعي ملكية أي من هذه المحتويات.</p>
+    <h2>الغرض التعليمي</h2>
+    <p>يهدف هذا الموقع إلى تعريف القراء العرب بعالم المانجا والمنهوا. إذا كنت صاحب حقوق أي من المحتويات المعروضة وتريد إزالتها، يرجى التواصل معنا على الفور.</p>
+    <h2>روابط خارجية</h2>
+    <p>قد يحتوي الموقع على روابط لمواقع خارجية. نحن لسنا مسؤولين عن محتوى هذه المواقع أو سياساتها.</p>
+    <h2>تواصل معنا</h2>
+    <p>للتواصل بشأن إزالة المحتوى: <a href="mailto:OKIROMANGA@GMAIL.COM">OKIROMANGA@GMAIL.COM</a></p>
+  </div>
+</div>
+<div class="page" id="page-static-contact">
+  <div class="static-page">
+    <h1>تواصل معنا</h1>
+    <p class="update-date">نرحب بتواصلكم وآرائكم</p>
+    <h2>البريد الإلكتروني</h2>
+    <p>للتواصل معنا في أي استفسار، شكوى، أو طلب إزالة محتوى:</p>
+    <p><a href="mailto:OKIROMANGA@GMAIL.COM" style="font-size:1.1rem;font-weight:700">OKIROMANGA@GMAIL.COM</a></p>
+    <h2>وقت الاستجابة</h2>
+    <p>نسعى للرد على جميع الاستفسارات خلال 48 ساعة في أيام العمل.</p>
+    <h2>مواضيع التواصل</h2>
+    <p>يمكنكم التواصل معنا بشأن: الإبلاغ عن مشاكل تقنية، طلب إضافة أعمال جديدة، الإبلاغ عن محتوى مخالف، اقتراحات لتحسين الموقع، أو الاستفسارات العامة.</p>
+  </div>
+</div>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="font-weight:900;font-size:1.3rem;background:linear-gradient(135deg,#7c3aed,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Hiyro Manga</div>
+        <p>موقعك الأول لقراءة المانجا والمنهوا والويب تون باللغة العربية.</p>
+      </div>
+      <div class="footer-col">
+        <h4>الموقع</h4>
+        <a data-nav="home">الرئيسية</a>
+        <a data-nav="search">استكشاف</a>
+      </div>
+      <div class="footer-col">
+        <h4>قانوني</h4>
+        <a data-nav="static-privacy">سياسة الخصوصية</a>
+        <a data-nav="static-terms">شروط الاستخدام</a>
+        <a data-nav="static-disclaimer">إخلاء المسؤولية</a>
+        <a data-nav="static-contact">تواصل معنا</a>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل</h4>
+        <a href="mailto:OKIROMANGA@GMAIL.COM">OKIROMANGA@GMAIL.COM</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Hiyro Manga. جميع الحقوق محفوظة.</p>
+      <p>المحتوى ملك لأصحابه الأصليين</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== AUTH MODAL ===================== -->
+<div class="modal-overlay hidden" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">الدخول إلى Hiyro Manga</span>
+      <button class="modal-close" id="close-auth">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <div class="modal-tab active" data-auth-tab="login">تسجيل الدخول</div>
+      <div class="modal-tab" data-auth-tab="register">إنشاء حساب</div>
+    </div>
+    <div class="modal-body">
+      <!-- LOGIN -->
+      <div id="auth-login">
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="login-email" class="form-control" placeholder="email@example.com"/>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••"/>
+        </div>
+        <div class="form-error" id="login-error"></div>
+        <button class="btn-block" id="login-btn">دخول</button>
+      </div>
+      <!-- REGISTER -->
+      <div id="auth-register" style="display:none">
+        <div class="form-group">
+          <label>اسم المستخدم</label>
+          <input type="text" id="reg-username" class="form-control" placeholder="username"/>
+        </div>
+        <div class="form-group">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="reg-email" class="form-control" placeholder="email@example.com"/>
+        </div>
+        <div class="form-group">
+          <label>كلمة المرور</label>
+          <input type="password" id="reg-password" class="form-control" placeholder="••••••••"/>
+        </div>
+        <div class="form-error" id="reg-error"></div>
+        <button class="btn-block" id="register-btn">إنشاء الحساب</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const SUPABASE_URL = 'https://bjldgyxchuqbhmyrecic.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_4tSGd4Dl5FhjTHMZ8DrHSw_ceRzqCjX';
+
+// ============================================================
+// SUPABASE CLIENT
+// ============================================================
+const sb = (() => {
+  const headers = { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+  let authToken = null;
+  const setAuth = t => { authToken = t; };
+  const getHeaders = (extra = {}) => {
+    const h = { ...headers, ...extra };
+    if (authToken) h['Authorization'] = 'Bearer ' + authToken;
+    return h;
+  };
+  const from = (table) => {
+    let url = `${SUPABASE_URL}/rest/v1/${table}`;
+    let params = [];
+    let method = 'GET';
+    let body = null;
+    const q = {
+      select: (cols = '*') => { params.push(`select=${encodeURIComponent(cols)}`); return q; },
+      eq: (col, val) => { params.push(`${col}=eq.${encodeURIComponent(val)}`); return q; },
+      neq: (col, val) => { params.push(`${col}=neq.${encodeURIComponent(val)}`); return q; },
+      gt: (col, val) => { params.push(`${col}=gt.${encodeURIComponent(val)}`); return q; },
+      gte: (col, val) => { params.push(`${col}=gte.${encodeURIComponent(val)}`); return q; },
+      lt: (col, val) => { params.push(`${col}=lt.${encodeURIComponent(val)}`); return q; },
+      ilike: (col, val) => { params.push(`${col}=ilike.${encodeURIComponent('%' + val + '%')}`); return q; },
+      order: (col, { ascending = true } = {}) => { params.push(`order=${col}.${ascending ? 'asc' : 'desc'}`); return q; },
+      limit: (n) => { params.push(`limit=${n}`); return q; },
+      range: (from, to) => { params.push(`offset=${from}&limit=${to - from + 1}`); return q; },
+      in: (col, vals) => { params.push(`${col}=in.(${vals.map(v => encodeURIComponent(v)).join(',')})`); return q; },
+      is: (col, val) => { params.push(`${col}=is.${val}`); return q; },
+      insert: (data) => { method = 'POST'; body = JSON.stringify(data); return q; },
+      upsert: (data, { onConflict } = {}) => {
+        method = 'POST';
+        body = JSON.stringify(data);
+        params.push('on_conflict=' + (onConflict || ''));
+        return q;
+      },
+      update: (data) => { method = 'PATCH'; body = JSON.stringify(data); return q; },
+      delete: () => { method = 'DELETE'; return q; },
+      single: () => { params.push('limit=1'); return q; },
+      execute: async () => {
+        const fullUrl = url + (params.length ? '?' + params.join('&') : '');
+        const extraHeaders = method !== 'GET' ? { 'Prefer': 'return=representation' } : {};
+        const res = await fetch(fullUrl, { method, headers: getHeaders(extraHeaders), body });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ message: res.statusText }));
+          return { data: null, error: err };
+        }
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          const data = await res.json();
+          return { data: Array.isArray(data) ? data : (data ? [data] : []), error: null };
+        }
+        return { data: [], error: null };
+      }
+    };
+    return q;
+  };
+  const rpc = async (fn, params = {}) => {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+      method: 'POST', headers: getHeaders(), body: JSON.stringify(params)
+    });
+    if (!res.ok) { const e = await res.json().catch(() => ({})); return { data: null, error: e }; }
+    const d = await res.json().catch(() => null);
+    return { data: d, error: null };
+  };
+  const auth = {
+    signUp: async ({ email, password, options }) => {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+        method: 'POST', headers, body: JSON.stringify({ email, password, data: options?.data || {} })
+      });
+      const d = await res.json();
+      if (d.access_token) setAuth(d.access_token);
+      return { data: d, error: d.error ? d : null };
+    },
+    signIn: async ({ email, password }) => {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST', headers, body: JSON.stringify({ email, password })
+      });
+      const d = await res.json();
+      if (d.access_token) { setAuth(d.access_token); localStorage.setItem('hm_token', d.access_token); localStorage.setItem('hm_user', JSON.stringify(d.user)); }
+      return { data: d, error: d.error_description ? { message: d.error_description } : null };
+    },
+    signOut: async () => {
+      await fetch(`${SUPABASE_URL}/auth/v1/logout`, { method: 'POST', headers: getHeaders() });
+      setAuth(null); localStorage.removeItem('hm_token'); localStorage.removeItem('hm_user');
+      return { error: null };
+    },
+    getSession: () => {
+      const t = localStorage.getItem('hm_token');
+      const u = localStorage.getItem('hm_user');
+      if (t) setAuth(t);
+      return { session: t ? { access_token: t, user: u ? JSON.parse(u) : null } : null };
+    }
+  };
+  return { from, rpc, auth, setAuth };
+})();
+
+// ============================================================
+// STATE
+// ============================================================
+let currentUser = null;
+let currentProfile = null;
+let currentWork = null;
+let currentChapter = null;
+let currentChapterList = [];
+let readerMode = 'vertical';
+let directLinkPassed = false;
+let sliderInterval = null;
+let sliderIndex = 0;
+let sliderItems = [];
+let searchPage = 0;
+let searchTotal = 0;
+const PAGE_SIZE = 20;
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', async () => {
+  const { session } = sb.auth.getSession();
+  if (session?.user) {
+    currentUser = session.user;
+    await loadProfile();
+  }
+  renderAuthArea();
+  attachNavListeners();
+  await loadHomePage();
+  loadAdsIntoPage();
+  upsertDailyVisit();
+});
+
+// ============================================================
+// DAILY VISIT
+// ============================================================
+async function upsertDailyVisit() {
+  await sb.rpc('upsert_daily_visit');
+}
+
+// ============================================================
+// ADS
+// ============================================================
+async function loadAdsIntoPage() {
+  const { data } = await sb.from('ad_codes').select('*').eq('is_active', 'true').execute();
+  if (!data || !data.length) return;
+  data.forEach(ad => {
+    const placeholders = document.querySelectorAll(`[data-ad-placement="${ad.placement}"]`);
+    placeholders.forEach(el => { el.innerHTML = ad.code; });
+  });
+}
+
+// ============================================================
+// AUTH AREA
+// ============================================================
+function renderAuthArea() {
+  const area = document.getElementById('auth-area');
+  const notifWrap = document.getElementById('notif-btn-wrap');
+  if (currentUser && currentProfile) {
+    notifWrap.style.display = 'block';
+    area.innerHTML = `
+      <div class="user-menu-wrap">
+        <div class="avatar-btn" id="avatar-toggle">
+          ${currentProfile.avatar_url ? `<img src="${currentProfile.avatar_url}" alt=""/>` : '👤'}
+        </div>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-dropdown-header">
+            <div class="uname">${currentProfile.display_name || currentProfile.username}</div>
+            <div class="uemail">${currentUser.email}</div>
+          </div>
+          <a data-nav="profile">👤 ملفي الشخصي</a>
+          ${currentProfile.role === 'admin' || currentProfile.role === 'publisher' ? '<a href="admin.html" target="_blank">⚙️ لوحة الإدارة</a>' : ''}
+          <div class="sep"></div>
+          <a id="logout-link" style="color:var(--red)">🚪 تسجيل الخروج</a>
+        </div>
+      </div>`;
+    document.getElementById('avatar-toggle')?.addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('user-dropdown').classList.toggle('open');
+    });
+    document.getElementById('logout-link')?.addEventListener('click', handleLogout);
+    loadNotifications();
+  } else {
+    notifWrap.style.display = 'none';
+    area.innerHTML = `<button class="btn-primary" id="open-auth-btn">تسجيل الدخول</button>`;
+    document.getElementById('open-auth-btn').addEventListener('click', () => openAuthModal());
+  }
+  document.addEventListener('click', e => {
+    const dd = document.getElementById('user-dropdown');
+    if (dd && !dd.contains(e.target) && e.target.id !== 'avatar-toggle') dd.classList.remove('open');
+    const np = document.getElementById('notif-panel');
+    if (np && np.classList.contains('open') && !np.contains(e.target) && e.target.id !== 'notif-btn') np.classList.remove('open');
+  });
+}
+
+async function loadProfile() {
+  if (!currentUser) return;
+  const { data } = await sb.from('profiles').select('*').eq('id', currentUser.id).limit(1).execute();
+  if (data?.[0]) currentProfile = data[0];
+}
+
+async function handleLogout() {
+  await sb.auth.signOut();
+  currentUser = null; currentProfile = null;
+  renderAuthArea();
+  showToast('تم تسجيل الخروج', 'info');
+  navigate('home');
+}
+
+// ============================================================
+// AUTH MODAL
+// ============================================================
+function openAuthModal(tab = 'login') {
+  document.getElementById('auth-modal').classList.remove('hidden');
+  switchAuthTab(tab);
+}
+function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+
+document.getElementById('close-auth').addEventListener('click', closeAuthModal);
+document.getElementById('auth-modal').addEventListener('click', e => { if (e.target === document.getElementById('auth-modal')) closeAuthModal(); });
+
+document.querySelectorAll('[data-auth-tab]').forEach(tab => {
+  tab.addEventListener('click', () => switchAuthTab(tab.dataset.authTab));
+});
+
+function switchAuthTab(t) {
+  document.querySelectorAll('[data-auth-tab]').forEach(el => el.classList.toggle('active', el.dataset.authTab === t));
+  document.getElementById('auth-login').style.display = t === 'login' ? 'block' : 'none';
+  document.getElementById('auth-register').style.display = t === 'register' ? 'block' : 'none';
+}
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+  if (!email || !password) { errEl.textContent = 'أدخل البريد وكلمة المرور'; errEl.classList.add('show'); return; }
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'جاري الدخول...';
+  const { data, error } = await sb.auth.signIn({ email, password });
+  btn.disabled = false; btn.textContent = 'دخول';
+  if (error) { errEl.textContent = 'بيانات خاطئة أو الحساب غير موجود'; errEl.classList.add('show'); return; }
+  currentUser = data.user;
+  await loadProfile();
+  if (currentProfile?.is_frozen) {
+    await sb.auth.signOut(); currentUser = null; currentProfile = null;
+    errEl.textContent = 'هذا الحساب موقوف. تواصل مع الدعم.'; errEl.classList.add('show'); return;
+  }
+  closeAuthModal();
+  renderAuthArea();
+  showToast('مرحباً ' + (currentProfile?.display_name || currentProfile?.username || ''), 'success');
+});
+
+document.getElementById('register-btn').addEventListener('click', async () => {
+  const username = document.getElementById('reg-username').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const errEl = document.getElementById('reg-error');
+  errEl.classList.remove('show');
+  if (!username || !email || !password) { errEl.textContent = 'جميع الحقول مطلوبة'; errEl.classList.add('show'); return; }
+  if (password.length < 6) { errEl.textContent = 'كلمة المرور 6 أحرف على الأقل'; errEl.classList.add('show'); return; }
+  const btn = document.getElementById('register-btn');
+  btn.disabled = true; btn.textContent = 'جاري الإنشاء...';
+  const { data, error } = await sb.auth.signUp({ email, password, options: { data: { username, display_name: username } } });
+  btn.disabled = false; btn.textContent = 'إنشاء الحساب';
+  if (error || !data?.id) { errEl.textContent = 'خطأ في الإنشاء. البريد مستخدم أو بيانات غير صحيحة.'; errEl.classList.add('show'); return; }
+  currentUser = data;
+  await loadProfile();
+  closeAuthModal();
+  renderAuthArea();
+  showToast('تم إنشاء حسابك بنجاح!', 'success');
+});
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function attachNavListeners() {
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-nav]');
+    if (el) { e.preventDefault(); navigate(el.dataset.nav); }
+    const back = e.target.closest('[data-nav-back]');
+    if (back) { e.preventDefault(); if (currentWork) navigate('work', currentWork.id); else navigate('home'); }
+  });
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobile-nav').classList.toggle('open');
+  });
+  document.getElementById('notif-btn')?.addEventListener('click', e => {
+    e.stopPropagation();
+    document.getElementById('notif-panel').classList.toggle('open');
+  });
+  document.getElementById('mark-all-read')?.addEventListener('click', markAllNotifsRead);
+  document.getElementById('reader-mode-v')?.addEventListener('click', () => setReaderMode('vertical'));
+  document.getElementById('reader-mode-h')?.addEventListener('click', () => setReaderMode('horizontal'));
+  document.querySelectorAll('.profile-tab').forEach(t => t.addEventListener('click', () => switchProfileTab(t.dataset.ptab)));
+
+  document.getElementById('sf-btn').addEventListener('click', () => { searchPage = 0; runSearch(); });
+  document.getElementById('sf-query').addEventListener('keydown', e => { if (e.key === 'Enter') { searchPage = 0; runSearch(); }});
+  document.getElementById('load-more-btn').addEventListener('click', () => { searchPage++; runSearch(true); });
+  document.getElementById('nav-search-input').addEventListener('input', debounce(handleNavSearch, 350));
+  document.getElementById('nav-search-input').addEventListener('focus', () => { if (document.getElementById('search-results-dropdown').children.length) document.getElementById('search-results-dropdown').style.display = 'block'; });
+  document.getElementById('nav-search-input').addEventListener('blur', () => setTimeout(() => { document.getElementById('search-results-dropdown').style.display = 'none'; }, 200));
+  document.getElementById('mobile-search-input').addEventListener('input', debounce(e => { document.getElementById('nav-search-input').value = e.target.value; handleNavSearch(); }, 350));
+
+  document.getElementById('reader-prev').addEventListener('click', () => navigateChapter(-1));
+  document.getElementById('reader-next').addEventListener('click', () => navigateChapter(1));
+  document.getElementById('reader-prev-bottom').addEventListener('click', () => navigateChapter(-1));
+  document.getElementById('reader-next-bottom').addEventListener('click', () => navigateChapter(1));
+  document.getElementById('save-settings-btn').addEventListener('click', saveProfileSettings);
+}
+
+function navigate(page, id) {
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.nav === page));
+  if (page === 'home') { document.getElementById('page-home').classList.add('active'); window.scrollTo(0,0); }
+  else if (page === 'search') { document.getElementById('page-search').classList.add('active'); window.scrollTo(0,0); }
+  else if (page === 'work') { document.getElementById('page-work').classList.add('active'); loadWorkDetail(id); window.scrollTo(0,0); }
+  else if (page === 'reader') { document.getElementById('page-reader').classList.add('active'); loadChapterReader(id); window.scrollTo(0,0); }
+  else if (page === 'profile') { if (!currentUser) { openAuthModal(); return; } document.getElementById('page-profile').classList.add('active'); loadProfilePage(); window.scrollTo(0,0); }
+  else if (page.startsWith('static-')) { document.getElementById('page-' + page).classList.add('active'); window.scrollTo(0,0); }
+}
+
+// ============================================================
+// HOME PAGE
+// ============================================================
+async function loadHomePage() {
+  await Promise.all([loadFeaturedSlider(), loadLatestChapters(), loadLatestWorks(), loadMostViewed(), loadMostFollowed(), loadCategories()]);
+}
+
+async function loadFeaturedSlider() {
+  const { data } = await sb.from('works').select('id,title,description,cover_url,type').eq('is_featured', 'true').limit(8).execute();
+  sliderItems = data || [];
+  if (!sliderItems.length) {
+    const { data: fallback } = await sb.from('works').select('id,title,description,cover_url,type').order('view_count', { ascending: false }).limit(6).execute();
+    sliderItems = fallback || [];
+  }
+  renderSlider();
+}
+
+function renderSlider() {
+  const track = document.getElementById('slider-track');
+  const dotsEl = document.getElementById('slider-dots');
+  if (!sliderItems.length) { document.getElementById('slider-section').style.display = 'none'; return; }
+  track.innerHTML = sliderItems.map((w, i) => `
+    <div class="slide">
+      <img src="${w.cover_url || ''}" alt="${escHtml(w.title)}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22400%22><rect fill=%22%23111118%22 width=%22800%22 height=%22400%22/></svg>'"/>
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-badge">${typeLabel(w.type)}</span>
+        <h2>${escHtml(w.title)}</h2>
+        <p>${escHtml(w.description || '')}</p>
+        <div class="slide-actions">
+          <button class="btn-primary" onclick="navigate('work','${w.id}')">اقرأ الآن</button>
+          <button class="btn-outline" onclick="navigate('work','${w.id}')">التفاصيل</button>
+        </div>
+      </div>
+    </div>`).join('');
+  dotsEl.innerHTML = sliderItems.map((_, i) => `<div class="slider-dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`).join('');
+  document.getElementById('slider-prev').addEventListener('click', () => goSlide((sliderIndex - 1 + sliderItems.length) % sliderItems.length));
+  document.getElementById('slider-next').addEventListener('click', () => goSlide((sliderIndex + 1) % sliderItems.length));
+  clearInterval(sliderInterval);
+  sliderInterval = setInterval(() => goSlide((sliderIndex + 1) % sliderItems.length), 5000);
+}
+
+window.goSlide = function(i) {
+  sliderIndex = i;
+  document.getElementById('slider-track').style.transform = `translateX(${i * 100}%)`;
+  document.querySelectorAll('.slider-dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+};
+
+async function loadLatestChapters() {
+  const { data } = await sb.from('chapters').select('id,chapter_number,title,created_at,work_id,works(id,title,cover_url)').order('created_at', { ascending: false }).limit(12).execute();
+  const el = document.getElementById('latest-chapters-list');
+  if (!data?.length) { el.innerHTML = '<div class="empty-state"><div class="icon">📚</div><p>لا توجد فصول حتى الآن</p></div>'; return; }
+  el.innerHTML = data.map(ch => `
+    <div class="chapter-home-item" onclick="navigate('reader','${ch.id}')">
+      <img class="chapter-home-cover" src="${ch.works?.cover_url || ''}" alt="" onerror="this.style.display='none'"/>
+      <div class="chapter-home-info">
+        <div class="chapter-home-title">${escHtml(ch.works?.title || '-')}</div>
+        <div class="chapter-home-chapter">الفصل ${ch.chapter_number}${ch.title ? ' - ' + escHtml(ch.title) : ''}</div>
+        <div class="chapter-home-time">${timeAgo(ch.created_at)}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function loadLatestWorks() {
+  const { data } = await sb.from('works').select('id,title,author,cover_url,type,status,latest_chapter_number').order('created_at', { ascending: false }).limit(12).execute();
+  document.getElementById('latest-works-grid').innerHTML = renderWorkCards(data);
+}
+
+async function loadMostViewed() {
+  const { data } = await sb.from('works').select('id,title,author,cover_url,type,status,view_count').order('view_count', { ascending: false }).limit(12).execute();
+  document.getElementById('most-viewed-grid').innerHTML = renderWorkCards(data, 'hot');
+}
+
+async function loadMostFollowed() {
+  const { data } = await sb.from('works').select('id,title,author,cover_url,type,status,follower_count').order('follower_count', { ascending: false }).limit(12).execute();
+  document.getElementById('most-followed-grid').innerHTML = renderWorkCards(data, 'new');
+}
+
+async function loadCategories() {
+  const { data } = await sb.from('categories').select('*').order('name', { ascending: true }).execute();
+  const el = document.getElementById('cats-grid');
+  if (!data?.length) return;
+  el.innerHTML = data.map(c => `<div class="cat-pill" onclick="searchByCategory('${c.id}','${escHtml(c.name)}')">${escHtml(c.name)}</div>`).join('');
+}
+
+window.searchByCategory = function(catId, catName) {
+  navigate('search');
+  document.getElementById('sf-query').value = '';
+  searchPage = 0;
+  runSearchByCat(catId);
+};
+
+async function runSearchByCat(catId) {
+  const { data: wids } = await sb.from('work_categories').select('work_id').eq('category_id', catId).execute();
+  if (!wids?.length) { document.getElementById('search-results-grid').innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>لا توجد أعمال في هذا التصنيف</p></div>'; return; }
+  const ids = wids.map(w => w.work_id);
+  const { data } = await sb.from('works').select('id,title,author,cover_url,type,status,view_count').in('id', ids).limit(PAGE_SIZE).execute();
+  document.getElementById('search-results-count').textContent = `${data?.length || 0} نتيجة`;
+  document.getElementById('search-results-grid').innerHTML = renderWorkCards(data);
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+async function runSearch(append = false) {
+  const q = document.getElementById('sf-query').value.trim();
+  const type = document.getElementById('sf-type').value;
+  const status = document.getElementById('sf-status').value;
+  const sort = document.getElementById('sf-sort').value;
+  let query = sb.from('works').select('id,title,author,cover_url,type,status,view_count,follower_count,latest_chapter_number');
+  if (q) query = query.ilike('title', q);
+  if (type) query = query.eq('type', type);
+  if (status) query = query.eq('status', status);
+  if (sort === 'views') query = query.order('view_count', { ascending: false });
+  else if (sort === 'followers') query = query.order('follower_count', { ascending: false });
+  else if (sort === 'az') query = query.order('title', { ascending: true });
+  else query = query.order('latest_chapter_at', { ascending: false });
+  query = query.range(searchPage * PAGE_SIZE, (searchPage + 1) * PAGE_SIZE - 1);
+  const { data } = await query.execute();
+  const grid = document.getElementById('search-results-grid');
+  const countEl = document.getElementById('search-results-count');
+  if (!append) {
+    if (!data?.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>لا توجد نتائج</p></div>'; countEl.textContent = '0 نتيجة'; document.getElementById('search-load-more').style.display = 'none'; return; }
+    grid.innerHTML = renderWorkCards(data);
+    countEl.textContent = `${data.length} نتيجة`;
+  } else {
+    grid.innerHTML += renderWorkCards(data);
+  }
+  document.getElementById('search-load-more').style.display = data?.length === PAGE_SIZE ? 'block' : 'none';
+}
+
+async function handleNavSearch() {
+  const q = document.getElementById('nav-search-input').value.trim();
+  const dd = document.getElementById('search-results-dropdown');
+  if (q.length < 2) { dd.style.display = 'none'; dd.innerHTML = ''; return; }
+  const { data } = await sb.from('works').select('id,title,author,cover_url,type').ilike('title', q).limit(6).execute();
+  if (!data?.length) { dd.style.display = 'none'; return; }
+  dd.innerHTML = data.map(w => `
+    <div class="search-result-item" onclick="navigate('work','${w.id}')">
+      <img src="${w.cover_url || ''}" alt="" onerror="this.style.display='none'"/>
+      <div class="search-result-info">
+        <h4>${escHtml(w.title)}</h4>
+        <p>${escHtml(w.author || '')} · ${typeLabel(w.type)}</p>
+      </div>
+    </div>`).join('');
+  dd.style.display = 'block';
+}
+
+// ============================================================
+// WORK DETAIL
+// ============================================================
+async function loadWorkDetail(workId) {
+  document.getElementById('work-detail-inner').innerHTML = '<div class="page-loader"><div class="loader"></div></div>';
+  const { data: works } = await sb.from('works').select('*').eq('id', workId).limit(1).execute();
+  if (!works?.[0]) { document.getElementById('work-detail-inner').innerHTML = '<div class="empty-state"><div class="icon">😕</div><p>العمل غير موجود</p></div>'; return; }
+  const work = works[0];
+  currentWork = work;
+  await sb.rpc('increment_work_view', { p_work_id: workId });
+  const { data: catLinks } = await sb.from('work_categories').select('categories(id,name,slug)').eq('work_id', workId).execute();
+  const cats = catLinks?.map(c => c.categories).filter(Boolean) || [];
+  const { data: chapters } = await sb.from('chapters').select('id,chapter_number,title,created_at,direct_link,view_count').eq('work_id', workId).order('chapter_number', { ascending: false }).execute();
+  currentChapterList = chapters || [];
+  let isFollowing = false, isFav = false;
+  if (currentUser) {
+    const { data: fol } = await sb.from('followers').select('id').eq('user_id', currentUser.id).eq('work_id', workId).limit(1).execute();
+    isFollowing = !!(fol?.length);
+    const { data: fav } = await sb.from('favorites').select('id').eq('user_id', currentUser.id).eq('work_id', workId).limit(1).execute();
+    isFav = !!(fav?.length);
+  }
+  const statusLabels = { ongoing: 'مستمر', completed: 'مكتمل', hiatus: 'متوقف', dropped: 'ملغى', upcoming: 'قادم' };
+  document.getElementById('work-detail-inner').innerHTML = `
+    <div class="work-hero">
+      <div class="work-cover"><img src="${work.cover_url || ''}" alt="${escHtml(work.title)}" onerror="this.style.background='var(--bg3)'"/></div>
+      <div class="work-info">
+        <span class="work-type-badge">${typeLabel(work.type)}</span>
+        <h1 class="work-title">${escHtml(work.title)}</h1>
+        <div class="work-author">✍️ ${escHtml(work.author)}${work.translation_team ? ' · 🌐 ' + escHtml(work.translation_team) : ''}</div>
+        <div class="work-stats">
+          <div class="work-stat"><span class="val">${fmtNum(work.view_count)}</span><span class="lbl">مشاهدة</span></div>
+          <div class="work-stat"><span class="val">${fmtNum(work.follower_count)}</span><span class="lbl">متابع</span></div>
+          <div class="work-stat"><span class="val">${work.chapter_count}</span><span class="lbl">فصل</span></div>
+        </div>
+        <span class="work-status ${work.status}">${statusLabels[work.status] || work.status}</span>
+        <div class="work-actions">
+          <button class="btn-follow ${isFollowing ? 'following' : ''}" id="follow-btn" onclick="toggleFollow('${work.id}',${isFollowing})">
+            ${isFollowing ? '✓ تتابع' : '+ متابعة'}
+          </button>
+          <button class="btn-fav ${isFav ? 'active' : ''}" id="fav-btn" onclick="toggleFav('${work.id}',${isFav})">
+            ${isFav ? '★ في المفضلة' : '☆ أضف للمفضلة'}
+          </button>
+        </div>
+        ${cats.length ? `<div class="work-cats">${cats.map(c => `<span class="work-cat-tag" onclick="searchByCategory('${c.id}','${escHtml(c.name)}')">${escHtml(c.name)}</span>`).join('')}</div>` : ''}
+        <div class="work-desc">${escHtml(work.description || 'لا توجد نبذة.')}</div>
+      </div>
+    </div>
+    <div class="chapters-section">
+      <h3>قائمة الفصول (${chapters?.length || 0})</h3>
+      <div class="chapter-list">
+        ${chapters?.length ? chapters.map(ch => `
+          <div class="chapter-item" onclick="navigate('reader','${ch.id}')">
+            <div class="chapter-item-info">
+              <div class="chapter-num">الفصل ${ch.chapter_number}</div>
+              ${ch.title ? `<div class="chapter-name">${escHtml(ch.title)}</div>` : ''}
+            </div>
+            ${ch.direct_link ? '<div class="chapter-has-link" title="يحتوي على رابط مباشر"></div>' : ''}
+            <span class="chapter-date">${timeAgo(ch.created_at)}</span>
+          </div>`).join('') : '<div class="empty-state"><div class="icon">📖</div><p>لا توجد فصول حتى الآن</p></div>'}
+      </div>
+    </div>`;
+}
+
+window.toggleFollow = async function(workId, isFollowing) {
+  if (!currentUser) { openAuthModal(); return; }
+  const btn = document.getElementById('follow-btn');
+  if (isFollowing) {
+    await sb.from('followers').eq('user_id', currentUser.id).eq('work_id', workId).delete().execute();
+    btn.className = 'btn-follow'; btn.textContent = '+ متابعة';
+    btn.setAttribute('onclick', `toggleFollow('${workId}',false)`);
+    showToast('تم إلغاء المتابعة', 'info');
+  } else {
+    await sb.from('followers').insert({ user_id: currentUser.id, work_id: workId }).execute();
+    btn.className = 'btn-follow following'; btn.textContent = '✓ تتابع';
+    btn.setAttribute('onclick', `toggleFollow('${workId}',true)`);
+    showToast('تمت المتابعة', 'success');
+  }
+};
+
+window.toggleFav = async function(workId, isFav) {
+  if (!currentUser) { openAuthModal(); return; }
+  const btn = document.getElementById('fav-btn');
+  if (isFav) {
+    await sb.from('favorites').eq('user_id', currentUser.id).eq('work_id', workId).delete().execute();
+    btn.className = 'btn-fav'; btn.textContent = '☆ أضف للمفضلة';
+    btn.setAttribute('onclick', `toggleFav('${workId}',false)`);
+    showToast('تم الحذف من المفضلة', 'info');
+  } else {
+    await sb.from('favorites').insert({ user_id: currentUser.id, work_id: workId }).execute();
+    btn.className = 'btn-fav active'; btn.textContent = '★ في المفضلة';
+    btn.setAttribute('onclick', `toggleFav('${workId}',true)`);
+    showToast('أضيف للمفضلة', 'success');
+  }
+};
+
+// ============================================================
+// CHAPTER READER
+// ============================================================
+async function loadChapterReader(chapterId) {
+  const gate = document.getElementById('direct-link-gate');
+  const body = document.getElementById('reader-body');
+  gate.style.display = 'none'; body.style.display = 'none';
+  document.getElementById('reader-work-title').textContent = 'جاري التحميل...';
+  const { data: chapters } = await sb.from('chapters').select('*,works(id,title)').eq('id', chapterId).limit(1).execute();
+  if (!chapters?.[0]) return;
+  currentChapter = chapters[0];
+  document.getElementById('reader-work-title').textContent = currentChapter.works?.title || '-';
+  document.getElementById('reader-chapter-num').textContent = 'الفصل ' + currentChapter.chapter_number;
+  const chIdx = currentChapterList.findIndex(c => c.id === chapterId);
+  const hasPrev = chIdx < currentChapterList.length - 1;
+  const hasNext = chIdx > 0;
+  document.getElementById('reader-prev').disabled = !hasPrev;
+  document.getElementById('reader-prev-bottom').disabled = !hasPrev;
+  document.getElementById('reader-next').disabled = !hasNext;
+  document.getElementById('reader-next-bottom').disabled = !hasNext;
+  await sb.rpc('increment_chapter_view', { p_chapter_id: chapterId });
+  if (currentUser) {
+    await sb.from('reading_history').upsert({ user_id: currentUser.id, work_id: currentChapter.work_id, chapter_id: chapterId, chapter_number: currentChapter.chapter_number, last_read_at: new Date().toISOString() }, { onConflict: 'user_id,work_id' }).execute();
+  }
+  if (currentChapter.direct_link && !directLinkPassed) {
+    gate.style.display = 'flex'; body.style.display = 'none';
+    document.getElementById('btn-continue-chapter').onclick = async () => {
+      await sb.from('click_logs').insert({ chapter_id: chapterId, work_id: currentChapter.work_id, publisher_id: null, user_id: currentUser?.id || null }).execute();
+      window.open(currentChapter.direct_link, '_blank');
+      directLinkPassed = true;
+      gate.style.display = 'none';
+      renderChapterImages(chapterId);
+    };
+  } else {
+    directLinkPassed = false;
+    renderChapterImages(chapterId);
+  }
+}
+
+async function renderChapterImages(chapterId) {
+  const { data: images } = await sb.from('chapter_images').select('*').eq('chapter_id', chapterId).order('sort_order', { ascending: true }).execute();
+  const body = document.getElementById('reader-body');
+  const vContainer = document.getElementById('reader-images-v');
+  const hContainer = document.getElementById('reader-images-h');
+  body.style.display = 'block';
+  if (!images?.length) { vContainer.innerHTML = '<div class="empty-state"><div class="icon">📷</div><p>لا توجد صور لهذا الفصل</p></div>'; return; }
+  const imgHtml = images.map(img => `
+    <div class="reader-img-wrap">
+      <img class="lazy-img" data-src="${img.image_url}" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" loading="lazy"/>
+    </div>`).join('');
+  vContainer.innerHTML = imgHtml;
+  hContainer.innerHTML = imgHtml;
+  initLazyLoad();
+}
+
+function initLazyLoad() {
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { const img = en.target; img.src = img.dataset.src; img.classList.add('loaded'); obs.unobserve(img); }});
+    }, { rootMargin: '200px' });
+    document.querySelectorAll('.lazy-img').forEach(img => obs.observe(img));
+  } else {
+    document.querySelectorAll('.lazy-img').forEach(img => { img.src = img.dataset.src; img.classList.add('loaded'); });
+  }
+}
+
+function navigateChapter(dir) {
+  const idx = currentChapterList.findIndex(c => c.id === currentChapter?.id);
+  const newIdx = idx - dir;
+  if (newIdx >= 0 && newIdx < currentChapterList.length) {
+    directLinkPassed = false;
+    loadChapterReader(currentChapterList[newIdx].id);
+    window.scrollTo(0,0);
+  }
+}
+
+function setReaderMode(mode) {
+  readerMode = mode;
+  document.getElementById('reader-mode-v').classList.toggle('active', mode === 'vertical');
+  document.getElementById('reader-mode-h').classList.toggle('active', mode === 'horizontal');
+  document.getElementById('reader-vertical').style.display = mode === 'vertical' ? 'block' : 'none';
+  document.getElementById('reader-horizontal').style.display = mode === 'horizontal' ? 'flex' : 'none';
+}
+
+// ============================================================
+// PROFILE PAGE
+// ============================================================
+async function loadProfilePage() {
+  if (!currentProfile) return;
+  const ph = document.getElementById('profile-header-inner');
+  ph.innerHTML = `
+    <div class="profile-avatar">
+      ${currentProfile.avatar_url ? `<img src="${currentProfile.avatar_url}" alt=""/>` : '👤'}
+    </div>
+    <div>
+      <div class="profile-name">${escHtml(currentProfile.display_name || currentProfile.username)}</div>
+      <div class="profile-role">${roleLabel(currentProfile.role)}</div>
+      ${currentProfile.bio ? `<p style="font-size:.85rem;color:var(--text2);margin-top:8px">${escHtml(currentProfile.bio)}</p>` : ''}
+    </div>`;
+  document.getElementById('settings-display-name').value = currentProfile.display_name || '';
+  document.getElementById('settings-avatar').value = currentProfile.avatar_url || '';
+  document.getElementById('settings-bio').value = currentProfile.bio || '';
+  loadProfileFavorites();
+  loadProfileHistory();
+}
+
+async function loadProfileFavorites() {
+  const { data } = await sb.from('favorites').select('works(id,title,cover_url,type,status)').eq('user_id', currentUser.id).order('created_at', { ascending: false }).execute();
+  const grid = document.getElementById('profile-favorites-grid');
+  if (!data?.length) { grid.innerHTML = '<div class="empty-state"><div class="icon">⭐</div><p>لا توجد أعمال في المفضلة</p></div>'; return; }
+  grid.innerHTML = renderWorkCards(data.map(d => d.works).filter(Boolean));
+}
+
+async function loadProfileHistory() {
+  const { data } = await sb.from('reading_history').select('*,works(id,title,cover_url),chapters(id,chapter_number)').eq('user_id', currentUser.id).order('last_read_at', { ascending: false }).limit(20).execute();
+  const el = document.getElementById('profile-history-list');
+  if (!data?.length) { el.innerHTML = '<div class="empty-state"><div class="icon">📖</div><p>سجل القراءة فارغ</p></div>'; return; }
+  el.innerHTML = data.map(h => `
+    <div class="chapter-home-item" onclick="navigate('reader','${h.chapter_id}')">
+      <img class="chapter-home-cover" src="${h.works?.cover_url || ''}" alt=""/>
+      <div class="chapter-home-info">
+        <div class="chapter-home-title">${escHtml(h.works?.title || '-')}</div>
+        <div class="chapter-home-chapter">آخر قراءة: الفصل ${h.chapter_number}</div>
+        <div class="chapter-home-time">${timeAgo(h.last_read_at)}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function saveProfileSettings() {
+  if (!currentUser) return;
+  const display_name = document.getElementById('settings-display-name').value.trim();
+  const avatar_url = document.getElementById('settings-avatar').value.trim();
+  const bio = document.getElementById('settings-bio').value.trim();
+  const btn = document.getElementById('save-settings-btn');
+  btn.disabled = true; btn.textContent = 'جاري الحفظ...';
+  const { error } = await sb.from('profiles').update({ display_name, avatar_url, bio }).eq('id', currentUser.id).execute();
+  btn.disabled = false; btn.textContent = 'حفظ التغييرات';
+  if (error) { showToast('خطأ في الحفظ', 'error'); return; }
+  await loadProfile(); renderAuthArea();
+  showToast('تم حفظ البيانات', 'success');
+}
+
+function switchProfileTab(tab) {
+  document.querySelectorAll('.profile-tab').forEach(t => t.classList.toggle('active', t.dataset.ptab === tab));
+  document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.toggle('active', c.id === 'ptab-' + tab));
+}
+
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+async function loadNotifications() {
+  if (!currentUser) return;
+  const { data } = await sb.from('notifications').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(30).execute();
+  const unread = data?.filter(n => !n.is_read).length || 0;
+  const badge = document.getElementById('notif-badge');
+  badge.textContent = unread;
+  badge.style.display = unread > 0 ? 'flex' : 'none';
+  const list = document.getElementById('notif-list');
+  if (!data?.length) { list.innerHTML = '<div class="notif-empty">لا توجد إشعارات</div>'; return; }
+  list.innerHTML = data.map(n => `
+    <div class="notif-item ${n.is_read ? '' : 'unread'}" onclick="handleNotifClick('${n.id}','${n.work_id || ''}','${n.chapter_id || ''}')">
+      <div class="notif-item-title">${escHtml(n.title)}</div>
+      ${n.body ? `<div class="notif-item-body">${escHtml(n.body)}</div>` : ''}
+      <div class="notif-item-time">${timeAgo(n.created_at)}</div>
+    </div>`).join('');
+}
+
+window.handleNotifClick = async function(id, workId, chapterId) {
+  await sb.from('notifications').update({ is_read: true }).eq('id', id).execute();
+  document.getElementById('notif-panel').classList.remove('open');
+  if (chapterId && chapterId !== 'null') navigate('reader', chapterId);
+  else if (workId && workId !== 'null') navigate('work', workId);
+};
+
+async function markAllNotifsRead() {
+  if (!currentUser) return;
+  await sb.from('notifications').update({ is_read: true }).eq('user_id', currentUser.id).execute();
+  await loadNotifications();
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function renderWorkCards(data, badge = '') {
+  if (!data?.length) return '<div class="empty-state"><div class="icon">📚</div><p>لا توجد نتائج</p></div>';
+  return data.filter(Boolean).map(w => `
+    <div class="work-card" onclick="navigate('work','${w.id}')">
+      <div class="work-card-cover">
+        <img src="${w.cover_url || ''}" alt="${escHtml(w.title)}" loading="lazy" onerror="this.parentElement.style.background='var(--bg3)'"/>
+        ${badge === 'hot' ? '<span class="work-card-badge hot">🔥 مميز</span>' : badge === 'new' ? '<span class="work-card-badge new">✨ جديد</span>' : ''}
+      </div>
+      <div class="work-card-body">
+        <div class="work-card-title">${escHtml(w.title)}</div>
+        <div class="work-card-meta">${typeLabel(w.type)} · ${statusLabel(w.status)}</div>
+        ${w.latest_chapter_number ? `<div class="work-card-latest">الفصل ${w.latest_chapter_number}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function typeLabel(t) { return { manga: 'مانجا', manhwa: 'منهوا', webtoon: 'ويب تون', novel: 'نوفل', manhua: 'مانهوا' }[t] || t || '-'; }
+function statusLabel(s) { return { ongoing: 'مستمر', completed: 'مكتمل', hiatus: 'متوقف', dropped: 'ملغى', upcoming: 'قادم' }[s] || s || '-'; }
+function roleLabel(r) { return { admin: 'مدير', publisher: 'ناشر', user: 'مستخدم' }[r] || r || '-'; }
+function escHtml(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtNum(n) { if (!n) return '0'; if (n >= 1e6) return (n/1e6).toFixed(1)+'M'; if (n >= 1e3) return (n/1e3).toFixed(1)+'K'; return String(n); }
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr); const now = new Date();
+  const diff = Math.floor((now - d) / 1000);
+  if (diff < 60) return 'منذ ثوانٍ';
+  if (diff < 3600) return `منذ ${Math.floor(diff/60)} دقيقة`;
+  if (diff < 86400) return `منذ ${Math.floor(diff/3600)} ساعة`;
+  if (diff < 2592000) return `منذ ${Math.floor(diff/86400)} يوم`;
+  if (diff < 31536000) return `منذ ${Math.floor(diff/2592000)} شهر`;
+  return `منذ ${Math.floor(diff/31536000)} سنة`;
+}
+function debounce(fn, wait) { let t; return function(...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), wait); }; }
+function showToast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+</script>
+</body>
+</html>
